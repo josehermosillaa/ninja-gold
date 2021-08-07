@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Ninja_gold</title>
+</head>
+<body>
+    <div class="container-fluid  min-vh-100">
+        <div class="row mt-5">
+
+            <div class="col-md-2 ms-5 bg-light border border-primary text-center rounded">
+
+                <h3 class="text-center">Granja</h3>
+                <img class="rounded img-fluid" alt="Responsive image" src="https://www.juegosindie.net/wp-content/uploads/2012/01/alice.jpg" width="150" height="150">
+                <p class="text-center">(Gana 10-20 Oro)</p>
+                <form action= 'process_money' method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="granja">
+                    <p class="text-center"><button type="submit" class="btn btn-primary">Encuentra Oro!</button></p>
+                </form>
+            
+            </div>
+            <div class="col-md-2 offset-md-1 bg-light border border-primary text-center rounded">
+                <h3 class="text-center">Cueva</h3>
+                <img class="rounded img-fluid" alt="" src="https://static.wikia.nocookie.net/disney/images/f/f9/CuevaMaravillas.png/revision/latest/scale-to-width-down/390?cb=20111012170740&path-prefix=es" width="150" height="150">
+                
+                <p class="text-center">(Gana 5-10 Oros)</p>
+                <form action="/process_money" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="cueva">
+                    <p class="text-center"><button type="submit" class="btn btn-primary mt-4">Encuentra Oro!</button></p>
+                </form>
+            </div>
+            <div class="col-md-2 offset-md-1 bg-light border border-primary text-center rounded">
+                <h3 class="text-center">Casa</h3>
+                <img class="rounded img-fluid" alt="Responsive image" src="https://www.nintenderos.com/wp-content/uploads/2021/06/Kitaria-FablesKitaria-Fables.jpg" width="150" height="150">
+                <p class="text-dark text-center">(Gana 5-10 Oros)</p>
+                <form action="/process_money" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="casa">
+                    <p class="text-center"><button type="submit" class="btn btn-primary mt-1">Encuentra Oro!</button></p>
+                </form>
+            </div>
+            <div class="col-md-2 offset-md-1  bg-light text-center border border-primary rounded">
+                <h3 class="text-center">Casino</h3>
+                
+                <img class="rounded img-fluid" alt="Responsive image" src="https://www.rushbet.co/blog/wp-content/uploads/2019/08/popular-1170x605.jpg" width="200" height="200">
+                <p class="text-center text-light">(Gana/Pierde 0-50 Oros)</p>
+                <form action="/process_money" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="place" value="casino">
+                    <p class="text-center"><button type="submit" class="btn btn-primary ">Juegatela!</button></p>
+                </form>
+            </div>
+        </div>
+        
+        <div class="row mb-5">
+            <div class="col-md-2  bg-light mt-5 rounded m-5 border border-primary ">
+                <p class="">Oro Objetivo: {{ MaxOro }}</p>   <p class="">Turnos: {{ Turnos }}</p> <p>Turno Actual: {{request.session.turnos}}</p>
+                <h2 class="text-center">Oro:   {{request.session.oro}}</h2>
+                <p class="text-center mt-5"><a class="btn btn-primary rounded" href="reset" role="button">Reset</a></p>
+            
+            </div>
+            <div class="col-md-6 offset-md-2 mt-5">
+                <h3 class="text">Actividades</h3>
+                
+                <div class="border border-solid">
+                    
+                    {% for activity in request.session.activities %}
+                    
+                    <br><span class="{%if activity.oro < 0 %}text-danger{%else%}text-success{%endif%}">{{ activity.text }}</span></br>
+                    
+                    {%endfor%}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
